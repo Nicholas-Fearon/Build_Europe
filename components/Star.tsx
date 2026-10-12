@@ -1,0 +1,1 @@
+export default function Star({ className = '' }: { className?: string }) { return <svg className={className} viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M44 0h12v32L79 9l9 9-23 23h35v13H66l24 24-9 9-25-24v37H44V65L20 89l-9-9 23-24H0V44h33L10 20l9-9 25 25z"/></svg>; }
