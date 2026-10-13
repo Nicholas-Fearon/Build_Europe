@@ -1,0 +1,9 @@
+import type { Metadata } from 'next';
+import PolicyPage from '@/components/PolicyPage';
+export const metadata: Metadata = { title: 'Accessibility — Build Europe' };
+export default function AccessibilityPage() { return <PolicyPage title="Accessibility" intro="We want Build Europe to be welcoming and easier to access, online and at the event." sections={[
+{id:'approach',title:'Our approach',content:<><p>We aim to make information easy to find, understand, and use. Accessibility is part of how we develop the website and plan the event. This statement describes our current approach; it is not a claim of independently audited compliance.</p></>},
+{id:'website',title:'Using the website',content:<><p>The site includes labelled form fields, visible keyboard focus, a skip-to-content link, and layouts that adapt to smaller screens. Navigation and forms are designed to work with a keyboard, and motion is reduced when your device requests it.</p><p>You can use your browser’s zoom controls to enlarge text. If something is difficult to read or use, we want to know about it.</p></>},
+{id:'event',title:'Access at the event',content:<><p>Venue access, facilities, and support arrangements will be published once confirmed. If you have an access requirement, please contact the organiser before making a booking so the available support can be discussed.</p><p className="policy-placeholder">To complete: venue access information, accessibility contact, and confirmed arrangements for captions, quiet spaces, and other support.</p></>},
+{id:'feedback',title:'Feedback and alternative formats',content:<><p>When the organiser’s contact channel is published on our <a href="/contact">Contact page</a>, you can use it to request an alternative format or report a problem. Tell us which page or feature caused difficulty and what would help. You do not need to disclose a medical diagnosis.</p></>},
+]}/>; }

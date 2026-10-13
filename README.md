@@ -36,3 +36,7 @@ Local Supabase also uses PostgreSQL. The schema is prepared here; a database ins
 Edit page content in the corresponding `app/*/page.tsx` files and `components/EnquiryPage.tsx`, styling in `app/globals.css`, and form fields in `components/InterestForm.tsx`. Replace the date and venue placeholders once confirmed. Before public launch, add an approved privacy policy with organiser contact and retention details, persistent hosted storage, abuse protection, and any email or ticketing integrations you need.
 
 Framework setup follows the official [Next.js installation guide](https://nextjs.org/docs/app/getting-started/installation) and [Tailwind Next.js guide](https://tailwindcss.com/docs/installation/framework-guides/nextjs).
+
+## Footer and draft information pages
+
+The shared footer links to all event pages plus `/privacy`, `/terms`, `/cookies`, `/accessibility`, `/code-of-conduct`, and `/contact`. These pages have generic draft copy. Complete the marked organiser identity, contact channels, legal basis, retention periods, accessibility arrangements, and incident reporting process before public launch. No fictional email addresses or social profiles are linked. There is no cookie banner because no optional tracking integration has been added; reassess if integrations change.
