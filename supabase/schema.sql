@@ -17,3 +17,5 @@ create index if not exists event_submissions_type_created_at_idx on public.event
 alter table public.event_submissions enable row level security;
 revoke all on public.event_submissions from anon, authenticated;
 grant insert on public.event_submissions to service_role;
+-- Admin can read records using the server-only Supabase key after local login.
+grant select on public.event_submissions to service_role;

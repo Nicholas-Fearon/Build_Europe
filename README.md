@@ -40,3 +40,13 @@ Framework setup follows the official [Next.js installation guide](https://nextjs
 ## Footer and draft information pages
 
 The shared footer links to all event pages plus `/privacy`, `/terms`, `/cookies`, `/accessibility`, `/code-of-conduct`, and `/contact`. These pages have generic draft copy. Complete the marked organiser identity, contact channels, legal basis, retention periods, accessibility arrangements, and incident reporting process before public launch. No fictional email addresses or social profiles are linked. There is no cookie banner because no optional tracking integration has been added; reassess if integrations change.
+
+## Local admin area
+
+Visit `http://localhost:3000/admin`. On first visit, a random local password and session secret are generated in `data/admin-access.json` (permissions 600, ignored by Git). Open this file locally and use its `password` value to sign in. Alternatively set `ADMIN_PASSWORD` (at least 12 characters) in `.env.local` and restart the server. Never share or commit the generated file.
+
+The admin shows attendance interest by default, plus filters for sponsorship and speaking, totals, name/email/organisation/role search, pagination, and full submission details including contact consent. Refresh to load new submissions. It uses existing records, without creating attendee accounts or confirming tickets. A missing submissions file produces an empty state; storage failures are reported without claiming an empty list.
+
+Access is restricted to localhost/loopback hostnames and requires a signed, HTTP-only, SameSite Strict cookie that expires after eight hours. Sign out clears the cookie. Ten failed sign-ins block further attempts for fifteen minutes in the current process. This is a single-organiser local MVP; before a hosted admin launch, replace local access with proper user authentication and role-based authorisation. Existing logged-out session tokens expire naturally; there is no server session revocation list.
+
+When using Supabase, apply the new `grant select on public.event_submissions to service_role;` statement to existing databases too. The admin reader checks authorisation before reading either local records or the database. No public listing/export endpoint exists. The local admin introduces an essential session cookie; public attendee forms remain cookie-free.
