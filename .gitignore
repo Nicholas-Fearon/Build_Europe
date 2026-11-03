@@ -5,3 +5,4 @@ node_modules/
 data/*.jsonl
 *.tsbuildinfo
 data/admin-access.json
+.env.production.local

@@ -1,0 +1,17 @@
+import {createClient} from '@supabase/supabase-js';
+import {supabasePublicConfig} from '../lib/runtime-config.mjs';
+process.loadEnvFile('.env.local');
+const {url,key}=supabasePublicConfig();
+const options={auth:{persistSession:false,autoRefreshToken:false},global:{fetch:(input,init)=>fetch(input,{...init,signal:AbortSignal.timeout(15000)})}};
+if(!process.env.SUPABASE_SECRET_KEY)throw new Error('Server secret key is missing.');
+const service=createClient(url,process.env.SUPABASE_SECRET_KEY,options);
+const publicClient=createClient(url,key,options);
+const {data,error}=await service.rpc('admin_submissions_page',{p_type:'all',p_search:'',p_page:1,p_page_size:20});
+if(error)throw new Error('Dashboard database RPC is unavailable ('+error.code+'). Apply the SQL setup first.');
+const {error:rateError}=await service.rpc('consume_rate_limit',{p_key:'0'.repeat(64),p_limit:100,p_window_seconds:60});
+if(rateError)throw new Error('Rate-limit RPC is unavailable.');
+const anonRead=await publicClient.from('event_submissions').select('id').limit(1);
+if(!anonRead.error)throw new Error('Public table access must be denied.');
+const anonRpc=await publicClient.rpc('admin_submissions_page',{p_type:'all',p_search:'',p_page:1,p_page_size:1});
+if(!anonRpc.error)throw new Error('Public admin RPC access must be denied.');
+console.log('Database RPCs verified; anonymous reads are denied. Submission totals: '+JSON.stringify(data.counts));
