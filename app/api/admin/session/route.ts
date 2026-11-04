@@ -4,15 +4,19 @@ import { COOKIE_NAME,SESSION_SECONDS,getLocalCredentials,createSession,passwordM
 import { adminEmail,authMode,isAdminUser,trustedOrigin } from '@/lib/runtime-config.mjs';
 import { authClient } from '@/lib/supabase/server';
 import { consumeLimit,readJson } from '@/lib/request-guards';
+import { reportFailure } from '@/lib/diagnostics.mjs';
 export const runtime='nodejs';
 function json(body:object,status=200){return NextResponse.json(body,{status,headers:{'Cache-Control':'private, no-store, max-age=0'}});}
 export async function POST(request:Request){
+  let stage = 'ORIGIN';
   try{
     if(!trustedOrigin(request))return json({error:'Please sign in from the Build Europe website.'},403);
     const input=await readJson(request,2000).catch(()=>null);
     if(!input||typeof input.email!=='string'||typeof input.password!=='string'||input.password.length>256||input.email.length>254)return json({error:'Enter your email and password.'},400);
+    stage = 'RATE_LIMIT';
     if(!await consumeLimit(request,'login',10,900))return json({error:'Too many attempts. Please try again in 15 minutes.'},429);
     if(input.email.trim().toLowerCase()!==adminEmail())return json({error:'Incorrect email or password.'},401);
+    stage = 'AUTHENTICATION';
     if(authMode()==='supabase'){
       const client=await authClient();
       const {data,error}=await client.auth.signInWithPassword({email:input.email.trim().toLowerCase(),password:input.password});
@@ -27,7 +31,7 @@ export async function POST(request:Request){
     const credentials=getLocalCredentials();
     if(!passwordMatches(input.password,credentials.hash))return json({error:'Incorrect email or password.'},401);
     const response=json({success:true});response.cookies.set(COOKIE_NAME,createSession(credentials.secret),{httpOnly:true,sameSite:'strict',secure:false,path:'/',maxAge:SESSION_SECONDS});return response;
-  }catch{return json({error:'Sign-in is temporarily unavailable. Please try again later.'},503);}
+  }catch(error){const reference=reportFailure('ADMIN',stage,error);return json({error:`Sign-in is temporarily unavailable. Reference: ${reference}.`,reference},503);}
 }
 export async function DELETE(request:Request){
   try{
@@ -39,5 +43,5 @@ export async function DELETE(request:Request){
     }
     (await cookies()).delete(COOKIE_NAME);
     return json({success:true});
-  }catch{return json({error:'Could not complete sign-out. Please try again.'},503);}
+  }catch(error){const reference=reportFailure('ADMIN','SIGN_OUT',error);return json({error:'Could not complete sign-out. Please try again.',reference},503);}
 }

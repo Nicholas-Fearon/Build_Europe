@@ -12,7 +12,7 @@ export async function getSubmissions(query:AdminQuery):Promise<SubmissionPage>{
   if(!await isAdmin())throw new Error('Unauthorised');
   if(storageMode()==='supabase'){
     const {data,error}=await serviceClient().rpc('admin_submissions_page',{p_type:query.type,p_search:query.q,p_page:query.page,p_page_size:query.pageSize});
-    if(error||!data||!Array.isArray(data.records))throw new Error('Unable to load submissions');
+    if(error||!data||!Array.isArray(data.records))throw Object.assign(new Error('Unable to load submissions'),{code:error?.code});
     return data as SubmissionPage;
   }
   let raw:string;

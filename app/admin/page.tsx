@@ -1,5 +1,7 @@
 import type {Metadata} from 'next';
+import {unstable_rethrow} from 'next/navigation';
 import {getAdminIdentity} from '@/lib/admin';
+import {reportFailure} from '@/lib/diagnostics.mjs';
 import {getSubmissions} from '@/lib/submissions';
 import {parseAdminQuery} from '@/lib/admin-query.mjs';
 import AdminLogin from '@/components/AdminLogin';
@@ -13,5 +15,5 @@ export default async function AdminPage({searchParams}:{searchParams:Promise<Rec
     const query=parseAdminQuery(await searchParams);
     const result=await getSubmissions(query);
     return <AdminDashboard result={result} query={query} email={identity.email}/>;
-  }catch{return <section className="section-pad"><h1 className="page-title">Admin is unavailable.</h1><p>We could not load the admin area. Please try again shortly.</p><a href="/admin" className="text-link">Try again ↻</a></section>;}
+  }catch(error){unstable_rethrow(error);const reference=reportFailure('ADMIN','PAGE',error);return <section className="section-pad"><h1 className="page-title">Admin is unavailable.</h1><p>We could not load the admin area. Please try again shortly.</p><p className="admin-note">Reference: {reference}</p><a href="/admin" className="text-link">Try again ↻</a></section>;}
 }

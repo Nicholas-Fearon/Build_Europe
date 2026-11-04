@@ -8,7 +8,7 @@ export async function consumeLimit(request:Request,scope:'login'|'submission',li
   const key=createHash('sha256').update(`${scope}:${ip}`).digest('hex');
   if (process.env.NODE_ENV === 'production') {
     const {data,error}=await serviceClient().rpc('consume_rate_limit',{p_key:key,p_limit:limit,p_window_seconds:windowSeconds});
-    if(error)throw new Error('Rate limiting is unavailable');
+    if(error)throw Object.assign(new Error('Rate limiting is unavailable'),{code:error.code});
     return data===true;
   }
   const now=Date.now();

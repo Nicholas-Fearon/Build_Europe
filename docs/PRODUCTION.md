@@ -70,3 +70,19 @@ On the deployed preview, verify sign-in with the assigned email, rejection of un
 ## Remaining event decisions
 
 Complete the draft organiser contact details, legal basis and retention periods, hosting region/transfer information, access arrangements, and Code of Conduct reporting channel. Confirm the event date and location before advertising ticket sales. Decide whether email acknowledgements, attendee accounts, payments, MFA, and password recovery are needed; these are not currently implemented. Review Supabase backups, retention, and platform monitoring for your deployment.
+
+## Vercel sign-in troubleshooting
+
+On Vercel, `APP_URL` can be omitted if system environment variables are enabled. Production uses `https://VERCEL_PROJECT_PRODUCTION_URL` (falling back to `VERCEL_URL`); previews use their own `VERCEL_URL`. An explicit `APP_URL` still takes precedence and must be the correct HTTPS site origin. Request Host/forwarded-host headers are never used to select a trusted production origin.
+
+Environment variable changes need a redeployment to affect the running app. Editing an example env file in Git does not set Vercel runtime environment variables. The Supabase aliases `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_ANON_KEY` and server-only `SUPABASE_SERVICE_ROLE_KEY` are accepted for projects using legacy key names.
+
+Sign-in now includes a safe reference code if the backend is unavailable. Match that reference in Vercel Function Logs:
+
+- `ADMIN_SITE_ORIGIN_CONFIGURATION`: missing/invalid `APP_URL` and no usable Vercel system URL.
+- `ADMIN_SUPABASE_PUBLIC_CONFIGURATION`: missing/invalid project URL or public key configuration.
+- `ADMIN_SUPABASE_SERVER_CONFIGURATION`: missing server-only Supabase secret/service-role key.
+- `ADMIN_RATE_LIMIT`: the production rate-limit database RPC could not run; a safe PostgreSQL/PostgREST code is logged when available.
+- `ADMIN_AUTHENTICATION`: an unexpected authentication exception.
+
+Only controlled reference labels and error codes are logged. Passwords, cookies, email addresses, upstream exception messages, and environment values are never included in these diagnostic records.
