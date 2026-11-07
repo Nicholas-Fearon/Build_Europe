@@ -1,11 +1,49 @@
-import Star from '@/components/Star';
+import { programme } from '@/lib/programme.mjs';
+
+const experiences = [
+  ["Hear how it’s built", 'Real engineers sharing the systems, decisions and lessons behind their work.'],
+  ['Get hands-on', 'Practical BUILD Labs to explore tools, tackle challenges and try something new.'],
+  ['Find your people', 'Meet engineers, developers and technical leaders from across Europe.'],
+  ['Grow your career', 'Learn from people navigating technical leadership, progression and what’s next.'],
+];
 export default function Home() {
   return <>
-      <section className="hero"><div className="hero-copy"><p className="eyebrow"><span className="live-dot"/> WOMEN IN TECH. EUROPE, TOGETHER.</p><h1>The future<br/>is ours<br/>to <span className="build-word">build.</span></h1><p className="hero-intro">A meeting place for the women moving tech forward.<br className="desktop-break"/> Big ideas. Real connections. A Europe we build together.</p><a className="button dark" href="/attend">Register to attend <span>↗</span></a><p className="hero-note">Event details coming soon · Be part of the beginning</p></div>
+      <section className="hero"><div className="hero-copy"><p className="eyebrow"><span className="live-dot"/> Women in Tech. Build. Europe</p><h1>The future<br/>is ours<br/>to <span className="build-word">build.</span></h1><p className="hero-intro">A European event bringing together women engineers, developers and technical practitioners building what’s next across AI, software, data, cloud and cybersecurity.</p><p className="hero-summary">Real engineering stories. Hands-on learning. Meaningful connections.</p><a className="button dark" href="/attend">Register your interest <span>↗</span></a><p className="hero-note">Be the first to hear about tickets, speakers, BUILD Labs and launch announcements.</p></div>
       <div className="hero-art brand-art" role="img" aria-label="Sculptural Build Europe symbol in blue, violet, pink and orange"><div className="brand-glow"/><span className="brand-art-label">PEOPLE BUILDING<br/>A BRIGHTER TOMORROW</span><svg className="hero-symbol" viewBox="0 0 500 540" aria-hidden="true"><defs><linearGradient id="hero-gradient" x1=".1" y1="0" x2=".8" y2="1"><stop stopColor="#335bff"/><stop offset=".32" stopColor="#8243ef"/><stop offset=".64" stopColor="#ed4bb8"/><stop offset="1" stopColor="#ff9a65"/></linearGradient><linearGradient id="hero-top" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f4f2ed"/><stop offset="1" stopColor="#c5c3d3"/></linearGradient></defs><path d="M72 70h204c108 0 163 46 163 111 0 50-32 88-81 104L247 178H72z" fill="url(#hero-top)"/><path d="M72 253h167l195 130c0 68-60 108-159 108H72z" fill="url(#hero-gradient)"/><path d="M72 253h167l-167 238z" fill="#ffffff" opacity=".07"/></svg><span className="brand-art-footer">IDEAS. COMMUNITY. POSSIBILITY.</span><span className="brand-art-arrow">↗</span></div></section>
-      <div className="ticker" aria-hidden="true"><span>BUILD CONNECTIONS</span><Star/><span>BUILD CONFIDENCE</span><Star/><span>BUILD WHAT’S NEXT</span><Star/><span>BUILD EUROPE</span><Star/></div>
-      <section id="about" className="about section-pad"><div><p className="eyebrow">01 / THE IDEA</p><h2>Different journeys.<br/>A shared ambition.</h2></div><div className="about-copy"><p className="large-copy">Tech moves forward when more of us have a hand in building it.</p><p>Build Europe brings women in tech together to exchange ideas, share what they’ve learned, and make meaningful connections across borders.</p><p>Whether you’re writing your first line of code, growing a company, shaping products, or finding your next chapter, there’s a place for you here.</p><a href="/about" className="text-link">More about Build Europe <span>↗</span></a></div></section>
-      <section id="involved" className="involved section-pad"><div className="section-heading"><div><p className="eyebrow">02 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div><div className="involvement-grid"><article><span className="small-label">FOR THE CURIOUS</span><h3>Be in the room.</h3><p>Meet your community and explore what comes next. Register your interest in attending.</p><a className="text-link" href="/attend">I’d like to attend <span>↗</span></a></article><article className="orange-card"><span className="small-label">FOR THE CHANGEMAKERS</span><h3>Back the vision.</h3><p>Put your organisation behind a more connected tech community. Let’s talk sponsorship.</p><a className="text-link" href="/sponsor">I’m interested in sponsoring <span>↗</span></a></article><article className="lilac-card"><span className="small-label">FOR THE IDEA-SHARERS</span><h3>Take the stage.</h3><p>Have a story, a hard-won lesson, or a fresh perspective? Help shape the conversation.</p><a className="text-link" href="/speak">I’m interested in speaking <span>↗</span></a></article></div></section>
+      <section className="event-strip" aria-label="Event information">
+        <div><strong>AMSTERDAM</strong><span>Netherlands</span></div>
+        <div><strong>2027</strong><span>October</span></div>
+        <div><strong>1,200</strong><span>Attendees</span></div>
+      </section>
+      <section id="about" className="about section-pad">
+        <div><p className="eyebrow">01 / THE IDEA</p><h2>Different journeys.<br/>A shared ambition.</h2></div>
+        <div className="about-copy">
+          <p className="large-copy">Technology moves forward when more of us have a hand in building it.</p>
+          <p>BUILD Europe brings together engineers, developers and technical minds from across Europe to share what they’re building, tackle real challenges and learn from one another.</p>
+          <p>From software engineering and AI to cloud, data and cybersecurity, we’re creating a space where technical expertise, fresh perspectives and new ideas come together.</p>
+          <p>We’re here to champion women in technology, welcome different perspectives and build a more inclusive industry.</p>
+          <a href="/about" className="text-link">More about BUILD Europe <span>↗</span></a>
+        </div>
+      </section>
+      <section className="section-pad home-experience" aria-labelledby="experience-title">
+        <p className="eyebrow">02 / THE EXPERIENCE</p>
+        <h2 id="experience-title">Come curious. Leave knowing more.</h2>
+        <p className="home-section-intro">Two days of real engineering stories, hands-on learning and conversations with people who understand what you do.</p>
+        <p className="home-section-intro mt-3">Explore new technologies, hear how others are solving real-world challenges and discover ideas you can put into practice.</p>
+        <p className="home-section-intro mt-3">Whether you’re looking to sharpen your skills, expand your network or explore what’s next in your career, BUILD Europe is a place to learn, connect and grow.</p>
+        <div className="home-experience-grid">{experiences.map(([title, description], index) => <article key={title}>
+          <span className="home-card-number" aria-hidden="true">0{index + 1} /</span><h3>{title}</h3><p>{description}</p>
+        </article>)}</div>
+      </section>
+      <section className="section-pad home-programme" aria-labelledby="programme-title">
+        <p className="eyebrow">03 / THE PROGRAMME</p>
+        <h2 id="programme-title">What we’ll explore</h2>
+        <p className="home-section-intro">From building AI applications to securing complex systems, BUILD Europe will explore the technologies, challenges and ideas shaping modern engineering.</p>
+        <div className="home-programme-grid">{programme.map(({id, title, description}) => <article key={id}>
+          <h3>{title}</h3><p>{description}</p>
+        </article>)}</div>
+      </section>
+      <section id="involved" className="involved section-pad"><div className="section-heading"><div><p className="eyebrow">04 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div><div className="involvement-grid"><article><span className="small-label">FOR THE CURIOUS</span><h3>Be in the room.</h3><p>Join Europe’s community of women engineers and technical practitioners for practical learning, fresh ideas and meaningful connections.</p><a className="text-link" href="/attend">Register your interest <span>↗</span></a></article><article className="orange-card"><span className="small-label">FOR THE CHANGEMAKERS</span><h3>Back the vision.</h3><p>Connect your brand with Europe’s engineering talent. Showcase the technology you’re building, engage technical practitioners and help champion the next generation of women in tech.</p><a className="text-link" href="/sponsor">I’m interested in sponsoring <span>↗</span></a></article><article className="lilac-card"><span className="small-label">FOR THE IDEA-SHARERS</span><h3>Take the stage.</h3><p>Are you an engineer or technical practitioner with a real story to share? We’re looking for people building, solving and learning from real technical challenges.</p><a className="text-link" href="/speak">I’m interested in speaking <span>↗</span></a></article></div></section>
 
   </>;
 }

@@ -7,6 +7,7 @@ import {storageMode,trustedOrigin} from '@/lib/runtime-config.mjs';
 import {serviceClient} from '@/lib/supabase/server';
 import {consumeLimit,readJson} from '@/lib/request-guards';
 import {reportFailure} from '@/lib/diagnostics.mjs';
+import {notifyEnquiry} from '@/lib/enquiry-notifications.mjs';
 export const runtime='nodejs';
 export async function POST(request:Request){
   let stage='ORIGIN';
@@ -22,6 +23,11 @@ export async function POST(request:Request){
       const {error}=await serviceClient().from('event_submissions').insert(record);if(error)throw new Error('Database insert failed');
     }else{
       const directory=join(process.cwd(),'data');await mkdir(directory,{recursive:true});await appendFile(join(directory,'submissions.jsonl'),JSON.stringify(record)+'\n',{mode:0o600});
+    }
+    // An email failure must not make a saved submission look unsuccessful.
+    const notification = await notifyEnquiry(record).catch(() => 'failed');
+    if (notification === 'failed' || (notification === 'not-configured' && process.env.NODE_ENV === 'production')) {
+      console.warn(JSON.stringify({ event: 'enquiry_notification', status: notification, type: record.type, id: record.id }));
     }
     return NextResponse.json({success:true,id:record.id},{status:201,headers:{'Cache-Control':'no-store'}});
   }catch(error){const reference=reportFailure('SUBMISSION',stage,error);return NextResponse.json({error:'We could not save your details. Please try again shortly.',reference},{status:503});}

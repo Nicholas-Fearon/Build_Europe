@@ -48,3 +48,18 @@ test("speaker requires both a topic and an outline", () => {
     }).value,
   );
 });
+
+test('attendee country and multiple interests survive validation and migration', () => {
+  const { value } = validateSubmission({ ...valid, country: ' Netherlands ', interests: ['ai', 'cloud', 'ai'] });
+  assert.deepEqual(value.details, { country: 'Netherlands', interests: ['ai', 'cloud'] });
+  assert.deepEqual(validateSubmission(value).value.details, value.details);
+  assert.ok(validateSubmission({ ...valid, interests: ['unknown'] }).error);
+  assert.ok(validateSubmission({ ...valid, country: 7 }).error);
+});
+
+test('speaker programme areas are restricted to known options, including Other', () => {
+  const speaker = { ...valid, type: 'speak', topic: 'Learning systems', message: 'A technical talk' };
+  assert.deepEqual(validateSubmission({ ...speaker, talk_area: 'other' }).value.details, { talk_area: 'other' });
+  assert.ok(validateSubmission({ ...speaker, talk_area: 'unknown' }).error);
+  assert.equal(validateSubmission(speaker).value.details, undefined);
+});
