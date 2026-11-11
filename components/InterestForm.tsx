@@ -1,6 +1,6 @@
 'use client';
 import { useState, type FormEvent } from 'react';
-import { partnershipOptions, programme } from '@/lib/programme.mjs';
+import { contributionTypes, partnershipOptions, programme, sponsorshipObjectives } from '@/lib/programme.mjs';
 export type Interest = 'attend' | 'sponsor' | 'speak';
 const labels = { attend: 'Attend', sponsor: 'Sponsor', speak: 'Speak' };
 const thankYou = {
@@ -16,7 +16,14 @@ export default function InterestForm({ type }: { type: Interest }) {
     const data = new FormData(form);
     const fields = Object.fromEntries(data);
     try {
-      const response = await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...fields, type, interests: data.getAll('interests'), consent: fields.consent === 'on' }) });
+      const payload = {
+        ...fields,
+        type,
+        interests: data.getAll('interests'),
+        sponsorship_objectives: data.getAll('sponsorship_objectives'),
+        consent: fields.consent === 'on',
+      };
+      const response = await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'We could not save your details. Please try again.');
       form.reset(); setStatus('success'); setMessage(thankYou[type]);
@@ -25,18 +32,36 @@ export default function InterestForm({ type }: { type: Interest }) {
   return <div className="form-card">
     <div className="form-tabs" aria-label="Choose how to get involved">{(Object.keys(labels) as Interest[]).map(item => <a key={item} href={`/${item}`} aria-current={type === item ? 'page' : undefined} className={type === item ? 'active' : ''}>{labels[item]} <span>↗</span></a>)}</div>
     {status === 'success' ? <div className="success" role="status"><span className="success-mark">✓</span><h3>You’re part of what’s next.</h3><p>{message}</p><button className="text-link" onClick={() => setStatus('idle')}>Send another enquiry ↗</button></div> : <form key={type} onSubmit={submit}>
-      <h3>{type === 'attend' ? 'Save your spot on the interest list.' : type === 'sponsor' ? 'Let’s build a partnership.' : 'Bring your perspective to the stage.'}</h3>
-      <p className="form-description">{type === 'attend' ? 'Be first to hear about tickets, speakers, BUILD Labs and launch announcements.' : type === 'sponsor' ? 'Tell us a little about your organisation and how you’d like to get involved.' : 'Real engineering stories, practical lessons and honest experiences. Tell us what you’d like to share.'}</p>
+      <h3>{type === 'attend' ? 'Be first to hear about BUILD Europe.' : type === 'sponsor' ? 'Let’s build a partnership.' : 'Share what you’re building.'}</h3>
+      <p className="form-description">{type === 'attend' ? 'Get updates on tickets, speakers, BUILD Labs and launch announcements.' : type === 'sponsor' ? 'Tell us a little about your organisation and how you’d like to get involved.' : 'Real engineering stories, practical lessons and honest experiences. Tell us what you’d like to share.'}</p>
       <div className="field-grid"><label>Full name <span>*</span><input name="name" autoComplete="name" placeholder="Alex Morgan" required maxLength={100}/></label><label>Email address <span>*</span><input name="email" type="email" autoComplete="email" placeholder="alex@example.com" required maxLength={254}/></label></div>
-      <div className="field-grid"><label>{type === 'sponsor' ? 'Organisation *' : 'Company / organisation'}<input name="company" autoComplete="organization" placeholder="Where you build" required={type === 'sponsor'} maxLength={150}/></label><label>{type === 'attend' ? 'Your role' : type === 'sponsor' ? 'Partnership interest *' : 'Talk topic *'}{type === 'sponsor' ? <select name="topic" required defaultValue=""><option value="" disabled>Select an option</option>{partnershipOptions.map(option => <option key={option}>{option}</option>)}</select> : <input name="topic" placeholder={type === 'attend' ? 'e.g. Software engineer' : 'What would you like to share?'} required={type === 'speak'} maxLength={200}/>}</label></div>
+      <div className="field-grid">
+        <label>{type === 'sponsor' ? 'Organisation *' : 'Company / organisation'}<input name="company" autoComplete="organization" placeholder="Where you build" required={type === 'sponsor'} maxLength={150}/></label>
+        <label>
+          {type === 'attend' ? 'Your role' : type === 'sponsor' ? 'Partnership interest *' : 'Talk topic (optional)'}
+          {type === 'sponsor' ? <select name="topic" required defaultValue=""><option value="" disabled>Select an option</option>{partnershipOptions.map(option => <option key={option}>{option}</option>)}</select> : <input name="topic" placeholder={type === 'attend' ? 'e.g. Software engineer' : 'What would you like to share?'} maxLength={200}/>}
+        </label>
+      </div>
       {type === 'attend' && <>
         <label>Country<input name="country" autoComplete="country-name" maxLength={100} placeholder="e.g. Netherlands"/></label>
         <fieldset className="form-interests"><legend>What are you most interested in? <span>(optional)</span></legend>
           <div className="form-interest-options">{programme.map(area => <label key={area.id}><input type="checkbox" name="interests" value={area.id}/>{area.interest}</label>)}</div>
         </fieldset>
       </>}
-      {type === 'speak' && <label>Which area best fits your talk?<select name="talk_area" defaultValue=""><option value="">Select an area</option>{programme.map(area => <option key={area.id} value={area.id}>{area.title}</option>)}<option value="other">Other</option></select></label>}
-      {type !== 'attend' && <label>{type === 'speak' ? 'Tell us about your idea *' : 'Anything else we should know?'}<textarea name="message" placeholder={type === 'speak' ? 'A short outline of your talk and what people will take away…' : 'Your goals, ideas, or questions…'} required={type === 'speak'} maxLength={3000} rows={3}/></label>}
+      {type === 'sponsor' && <fieldset className="form-interests">
+        <legend>What are your sponsorship objectives? <span>(optional)</span></legend>
+        <div className="form-interest-options">
+          {sponsorshipObjectives.map(objective => <label key={objective}><input type="checkbox" name="sponsorship_objectives" value={objective}/>{objective}</label>)}
+        </div>
+      </fieldset>}
+      {type === 'speak' && <>
+        <label>Contribution type<select name="contribution_type" defaultValue="">
+          <option value="">Select a contribution type</option>
+          {contributionTypes.map(contribution => <option key={contribution}>{contribution}</option>)}
+        </select></label>
+        <label>Which area best fits your contribution?<select name="talk_area" defaultValue=""><option value="">Select an area</option>{programme.map(area => <option key={area.id} value={area.id}>{area.title}</option>)}<option value="other">Other</option></select></label>
+      </>}
+      {type !== 'attend' && <label>{type === 'speak' ? 'Tell us about your idea *' : 'Anything else we should know?'}<textarea name="message" placeholder={type === 'speak' ? 'Tell us what you’re working on, what you’d like to share or how you might contribute.' : 'Your goals, ideas, or questions…'} required={type === 'speak'} maxLength={3000} rows={3}/></label>}
       <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off"/></label></div>
       <label className="consent"><input type="checkbox" name="consent" required/><span>I agree to be contacted about my Build Europe enquiry. <a href="/privacy">How we use your details</a>.</span></label>
       {status === 'error' && <p className="error" role="alert">{message}</p>}

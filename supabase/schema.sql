@@ -10,7 +10,7 @@ create table if not exists public.event_submissions (
   message text not null default '' check (char_length(message) <= 3000),
   consent boolean not null check (consent = true),
   check (type <> 'sponsor' or (company <> '' and topic <> '')),
-  check (type <> 'speak' or (topic <> '' and message <> ''))
+  constraint event_submissions_speak_message_required check (type <> 'speak' or message <> '')
 );
 create index if not exists event_submissions_type_created_at_idx on public.event_submissions(type, created_at desc);
 -- No anonymous read/write policies. All application inserts use the server secret key.

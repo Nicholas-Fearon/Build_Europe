@@ -91,4 +91,6 @@ Only controlled reference labels and error codes are logged. Passwords, cookies,
 
 Apply `supabase/registration-fields.sql` in the Supabase SQL editor after `schema.sql` and `production.sql`, before deploying the updated forms. It adds optional attendee country and technical interests, and speaker programme area, to existing submissions without rewriting old answers. The same details appear in the protected admin dashboard.
 
+Apply `supabase/optional-speaker-topic.sql` next so speaker enquiries can be saved without a talk topic. An idea description is still required. Sponsorship objectives and speaker contribution type use the existing submission details column.
+
 For sponsor and speaker notifications, set `RESEND_API_KEY` and `ENQUIRY_NOTIFICATION_FROM` (a Resend-verified sender) in Vercel's Production environment, then redeploy. `ENQUIRY_NOTIFICATION_TO` optionally overrides the recipient; otherwise it defaults to `ADMIN_EMAIL`. Attendance does not send notifications. The alert contains a link and reference only, and is sent after the submission is saved. Delivery failures are logged without causing the form to ask the submitter to submit again; enquiries remain accessible in the admin dashboard. These alerts do not send email to the submitter. See the [Resend Send Email API](https://resend.com/docs/api-reference/emails/send-email).

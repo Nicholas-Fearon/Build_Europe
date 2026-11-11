@@ -5,7 +5,13 @@ import {isAdmin} from './admin';
 import {storageMode} from './runtime-config.mjs';
 import {localSubmissionPage} from './admin-query.mjs';
 import {serviceClient} from './supabase/server';
-export type Submission={id:string;created_at:string;type:'attend'|'sponsor'|'speak';name:string;email:string;company:string;topic:string;message:string;consent:boolean;details?:{country?:string;interests?:string[];talk_area?:string}};
+export type Submission={id:string;created_at:string;type:'attend'|'sponsor'|'speak';name:string;email:string;company:string;topic:string;message:string;consent:boolean;details?:{
+  country?:string;
+  interests?:string[];
+  talk_area?:string;
+  contribution_type?:string;
+  sponsorship_objectives?:string[];
+}};
 export type AdminQuery={type:string;q:string;page:number;pageSize:number};
 export type SubmissionPage={records:Submission[];counts:{all:number;attend:number;sponsor:number;speak:number};total:number;page:number;pages:number};
 export async function getSubmissions(query:AdminQuery):Promise<SubmissionPage>{

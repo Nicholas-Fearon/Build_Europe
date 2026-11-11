@@ -37,16 +37,30 @@ test("sponsor requires an organisation and partnership interest", () => {
     }).value,
   );
 });
-test("speaker requires both a topic and an outline", () => {
+test("speaker can omit the topic but must describe the idea", () => {
   assert.ok(validateSubmission({ ...valid, type: "speak", topic: "AI" }).error);
-  assert.ok(
-    validateSubmission({
-      ...valid,
-      type: "speak",
-      topic: "AI",
-      message: "A practical workshop",
-    }).value,
-  );
+  const { value } = validateSubmission({
+    ...valid,
+    type: "speak",
+    message: "A practical workshop",
+    contribution_type: "BUILD Lab / workshop",
+  });
+  assert.equal(value.topic, "");
+  assert.deepEqual(value.details, { contribution_type: "BUILD Lab / workshop" });
+  assert.deepEqual(validateSubmission(value).value.details, value.details);
+  assert.ok(validateSubmission({ ...value, contribution_type: "Unknown" }).error);
+});
+
+test("sponsorship objectives support multiple selections and older enquiries", () => {
+  const sponsor = { ...valid, type: "sponsor", company: "Example", topic: "Community partnership" };
+  const { value } = validateSubmission({
+    ...sponsor,
+    sponsorship_objectives: ["Inclusion", "Developer engagement", "Inclusion"],
+  });
+  assert.deepEqual(value.details, { sponsorship_objectives: ["Inclusion", "Developer engagement"] });
+  assert.deepEqual(validateSubmission(value).value.details, value.details);
+  assert.equal(validateSubmission(sponsor).value.details, undefined);
+  assert.ok(validateSubmission({ ...sponsor, sponsorship_objectives: ["Unknown"] }).error);
 });
 
 test('attendee country and multiple interests survive validation and migration', () => {

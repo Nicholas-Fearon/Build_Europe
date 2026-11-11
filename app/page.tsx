@@ -8,12 +8,20 @@ const experiences = [
 ];
 export default function Home() {
   return <>
-      <section className="hero"><div className="hero-copy"><p className="eyebrow"><span className="live-dot"/> Women in Tech. Build. Europe</p><h1>The future<br/>is ours<br/>to <span className="build-word">build.</span></h1><p className="hero-intro">A European event bringing together women engineers, developers and technical practitioners building what’s next across AI, software, data, cloud and cybersecurity.</p><p className="hero-summary">Real engineering stories. Hands-on learning. Meaningful connections.</p><a className="button dark" href="/attend">Register your interest <span>↗</span></a><p className="hero-note">Be the first to hear about tickets, speakers, BUILD Labs and launch announcements.</p></div>
+      <section className="hero">
+        <div className="hero-copy">
+          <p className="eyebrow"><span className="live-dot"/> ENGINEERING. COMMUNITY. POSSIBILITY.</p>
+          <h1>The future<br/>is ours<br/>to <span className="build-word">build.</span></h1>
+          <p className="hero-intro">A new European conference bringing together engineers, developers and technical practitioners for real engineering stories, hands-on learning and meaningful connections.</p>
+          <p className="hero-summary">Built for everyone passionate about technology, with a commitment to championing women and creating a more inclusive engineering community.</p>
+          <a className="button dark" href="/attend">Register your interest <span>↗</span></a>
+          <p className="hero-note">Be the first to hear about tickets, speakers, BUILD Labs and launch announcements.</p>
+        </div>
       <div className="hero-art brand-art" role="img" aria-label="Sculptural Build Europe symbol in blue, violet, pink and orange"><div className="brand-glow"/><span className="brand-art-label">PEOPLE BUILDING<br/>A BRIGHTER TOMORROW</span><svg className="hero-symbol" viewBox="0 0 500 540" aria-hidden="true"><defs><linearGradient id="hero-gradient" x1=".1" y1="0" x2=".8" y2="1"><stop stopColor="#335bff"/><stop offset=".32" stopColor="#8243ef"/><stop offset=".64" stopColor="#ed4bb8"/><stop offset="1" stopColor="#ff9a65"/></linearGradient><linearGradient id="hero-top" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f4f2ed"/><stop offset="1" stopColor="#c5c3d3"/></linearGradient></defs><path d="M72 70h204c108 0 163 46 163 111 0 50-32 88-81 104L247 178H72z" fill="url(#hero-top)"/><path d="M72 253h167l195 130c0 68-60 108-159 108H72z" fill="url(#hero-gradient)"/><path d="M72 253h167l-167 238z" fill="#ffffff" opacity=".07"/></svg><span className="brand-art-footer">IDEAS. COMMUNITY. POSSIBILITY.</span><span className="brand-art-arrow">↗</span></div></section>
       <section className="event-strip" aria-label="Event information">
         <div><strong>AMSTERDAM</strong><span>Netherlands</span></div>
         <div><strong>2027</strong><span>October</span></div>
-        <div><strong>1,200</strong><span>Attendees</span></div>
+        <div><strong>2 DAYS</strong><span>Technical learning &amp; community</span></div>
       </section>
       <section id="about" className="about section-pad">
         <div><p className="eyebrow">01 / THE IDEA</p><h2>Different journeys.<br/>A shared ambition.</h2></div>
@@ -43,7 +51,29 @@ export default function Home() {
           <h3>{title}</h3><p>{description}</p>
         </article>)}</div>
       </section>
-      <section id="involved" className="involved section-pad"><div className="section-heading"><div><p className="eyebrow">04 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div><div className="involvement-grid"><article><span className="small-label">FOR THE CURIOUS</span><h3>Be in the room.</h3><p>Join Europe’s community of women engineers and technical practitioners for practical learning, fresh ideas and meaningful connections.</p><a className="text-link" href="/attend">Register your interest <span>↗</span></a></article><article className="orange-card"><span className="small-label">FOR THE CHANGEMAKERS</span><h3>Back the vision.</h3><p>Connect your brand with Europe’s engineering talent. Showcase the technology you’re building, engage technical practitioners and help champion the next generation of women in tech.</p><a className="text-link" href="/sponsor">I’m interested in sponsoring <span>↗</span></a></article><article className="lilac-card"><span className="small-label">FOR THE IDEA-SHARERS</span><h3>Take the stage.</h3><p>Are you an engineer or technical practitioner with a real story to share? We’re looking for people building, solving and learning from real technical challenges.</p><a className="text-link" href="/speak">I’m interested in speaking <span>↗</span></a></article></div></section>
+      <section id="involved" className="involved section-pad">
+        <div className="section-heading"><div><p className="eyebrow">04 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div>
+        <div className="involvement-grid">
+          <article>
+            <span className="small-label">FOR THE BUILDERS</span>
+            <h3>Be part of it.</h3>
+            <p>Join engineers, developers and technical practitioners from across Europe for practical learning, fresh ideas and meaningful connections.</p>
+            <a className="text-link" href="/attend">Register your interest <span>↗</span></a>
+          </article>
+          <article className="orange-card">
+            <span className="small-label">FOR THE PARTNERS</span>
+            <h3>Help shape what’s next.</h3>
+            <p>Connect your organisation with Europe’s engineering community. Showcase what you’re building, engage technical talent and help champion women in technology.</p>
+            <a className="text-link" href="/sponsor">Explore sponsorship <span>↗</span></a>
+          </article>
+          <article className="lilac-card">
+            <span className="small-label">FOR THE TECHNICAL VOICES</span>
+            <h3>Share what you’re building.</h3>
+            <p>Have a real engineering story, technical challenge or practical skill to share? We’re looking for speakers and BUILD Lab contributors who can help others learn.</p>
+            <a className="text-link" href="/speak">Get involved as a speaker <span>↗</span></a>
+          </article>
+        </div>
+      </section>
 
   </>;
 }
