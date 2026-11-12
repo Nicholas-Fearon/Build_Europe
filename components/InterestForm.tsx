@@ -1,6 +1,8 @@
 'use client';
 import { useState, type FormEvent } from 'react';
-import { contributionTypes, partnershipOptions, programme, sponsorshipObjectives } from '@/lib/programme.mjs';
+import {
+  contributionTypes, partnershipOptions, partnershipTimingOptions, programme, sessionLevels, sponsorshipObjectives,
+} from '@/lib/programme.mjs';
 export type Interest = 'attend' | 'sponsor' | 'speak';
 const labels = { attend: 'Attend', sponsor: 'Sponsor', speak: 'Speak' };
 const thankYou = {
@@ -48,22 +50,45 @@ export default function InterestForm({ type }: { type: Interest }) {
           <div className="form-interest-options">{programme.map(area => <label key={area.id}><input type="checkbox" name="interests" value={area.id}/>{area.interest}</label>)}</div>
         </fieldset>
       </>}
-      {type === 'sponsor' && <fieldset className="form-interests">
-        <legend>What are your sponsorship objectives? <span>(optional)</span></legend>
-        <div className="form-interest-options">
-          {sponsorshipObjectives.map(objective => <label key={objective}><input type="checkbox" name="sponsorship_objectives" value={objective}/>{objective}</label>)}
-        </div>
-      </fieldset>}
+      {type === 'sponsor' && <>
+        <fieldset className="form-interests">
+          <legend>What are your sponsorship objectives? <span>(optional)</span></legend>
+          <div className="form-interest-options">
+            {sponsorshipObjectives.map(objective => <label key={objective}><input type="checkbox" name="sponsorship_objectives" value={objective}/>{objective}</label>)}
+          </div>
+        </fieldset>
+        <label>When are you considering partnership involvement? <span>(optional)</span>
+          <select name="partnership_timing" defaultValue="">
+            <option value="">Select a timeframe</option>
+            {partnershipTimingOptions.map(timing => <option key={timing}>{timing}</option>)}
+          </select>
+        </label>
+      </>}
       {type === 'speak' && <>
         <label>Contribution type<select name="contribution_type" defaultValue="">
           <option value="">Select a contribution type</option>
           {contributionTypes.map(contribution => <option key={contribution}>{contribution}</option>)}
         </select></label>
-        <label>Which area best fits your contribution?<select name="talk_area" defaultValue=""><option value="">Select an area</option>{programme.map(area => <option key={area.id} value={area.id}>{area.title}</option>)}<option value="other">Other</option></select></label>
+        <label>Which area best fits your contribution?<select name="talk_area" defaultValue=""><option value="">Select an area</option>{programme.map(area => <option key={area.id} value={area.id}>{area.title}</option>)}</select></label>
+        <label>What level is your proposed session aimed at? <span>(optional)</span>
+          <select name="session_level" defaultValue="">
+            <option value="">Select a level</option>
+            {sessionLevels.map(level => <option key={level}>{level}</option>)}
+          </select>
+        </label>
       </>}
-      {type !== 'attend' && <label>{type === 'speak' ? 'Tell us about your idea *' : 'Anything else we should know?'}<textarea name="message" placeholder={type === 'speak' ? 'Tell us what you’re working on, what you’d like to share or how you might contribute.' : 'Your goals, ideas, or questions…'} required={type === 'speak'} maxLength={3000} rows={3}/></label>}
+      {type === 'speak' && <label>Tell us what you’ve built, learned or would like to share. <span>*</span>
+        <textarea name="message" placeholder="Tell us about the technical challenge, project, research or practical lesson you’d like to bring to BUILD Europe. A fully developed session proposal isn’t necessary at this stage." required maxLength={3000} rows={4}/>
+      </label>}
+      {type === 'sponsor' && <label>Anything else we should know?
+        <textarea name="message" placeholder="Your goals, ideas, or questions…" maxLength={3000} rows={3}/>
+      </label>}
       <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off"/></label></div>
-      <label className="consent"><input type="checkbox" name="consent" required/><span>I agree to be contacted about my Build Europe enquiry. <a href="/privacy">How we use your details</a>.</span></label>
+      <label className="consent"><input type="checkbox" name="consent" required/>
+        {type === 'attend'
+          ? <span>I agree to receive BUILD Europe event updates by email. Read our <a href="/privacy">privacy notice</a>.</span>
+          : <span>I agree to be contacted about my BUILD Europe enquiry. <a href="/privacy">How we use your details</a>.</span>}
+      </label>
       {status === 'error' && <p className="error" role="alert">{message}</p>}
       <button className="button dark form-submit" disabled={status === 'loading'}>{status === 'loading' ? 'Saving your details…' : type === 'attend' ? 'Register my interest' : type === 'sponsor' ? 'Send sponsorship enquiry' : 'Submit my speaking idea'}<span>↗</span></button>
       <p className="form-note">{type === 'attend' ? 'No payment. No commitment. Just possibility.' : 'Good things begin with a conversation.'}</p>

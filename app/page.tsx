@@ -1,4 +1,4 @@
-import { programme } from '@/lib/programme.mjs';
+import { programme, workshopLevels } from '@/lib/programme.mjs';
 
 const experiences = [
   ["Hear how it’s built", 'Real engineers sharing the systems, decisions and lessons behind their work.'],
@@ -36,9 +36,9 @@ export default function Home() {
       <section className="section-pad home-experience" aria-labelledby="experience-title">
         <p className="eyebrow">02 / THE EXPERIENCE</p>
         <h2 id="experience-title">Come curious. Leave knowing more.</h2>
-        <p className="home-section-intro">Two days of real engineering stories, hands-on learning and conversations with people who understand what you do.</p>
-        <p className="home-section-intro mt-3">Explore new technologies, hear how others are solving real-world challenges and discover ideas you can put into practice.</p>
-        <p className="home-section-intro mt-3">Whether you’re looking to sharpen your skills, expand your network or explore what’s next in your career, BUILD Europe is a place to learn, connect and grow.</p>
+        <p className="home-section-intro">Two days of real engineering case studies, live demonstrations and hands-on learning.</p>
+        <p className="home-section-intro mt-3">Go behind the scenes of the technologies being built across Europe. Discover the architecture, decisions, challenges and lessons behind real products and systems, with practical ideas you can take back to work.</p>
+        <p className="home-section-intro mt-3">Whether you’re here to develop your skills, discover new technologies or meet people solving similar challenges, you’ll leave with something valuable.</p>
         <div className="home-experience-grid">{experiences.map(([title, description], index) => <article key={title}>
           <span className="home-card-number" aria-hidden="true">0{index + 1} /</span><h3>{title}</h3><p>{description}</p>
         </article>)}</div>
@@ -50,6 +50,16 @@ export default function Home() {
         <div className="home-programme-grid">{programme.map(({id, title, description}) => <article key={id}>
           <h3>{title}</h3><p>{description}</p>
         </article>)}</div>
+      </section>
+      <section className="section-pad home-experience" aria-labelledby="labs-title">
+        <h2 id="labs-title">BUILD Labs. Less watching. More doing.</h2>
+        <p className="home-section-intro">Bring your laptop and get involved.</p>
+        <p className="home-section-intro mt-3">Work through practical engineering challenges alongside experienced practitioners, experiment with new tools and develop skills you can apply immediately.</p>
+        <p className="home-section-intro mt-3">From AI applications and software development to cloud infrastructure, data and security, BUILD Labs are designed for people who want to learn by doing.</p>
+        <p className="eyebrow mt-6">Proposed workshop levels</p>
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {workshopLevels.map(level => <li key={level} className="rounded border border-[var(--line)] px-3 py-2 text-sm">{level}</li>)}
+        </ul>
       </section>
       <section id="involved" className="involved section-pad">
         <div className="section-heading"><div><p className="eyebrow">04 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div>
@@ -63,7 +73,7 @@ export default function Home() {
           <article className="orange-card">
             <span className="small-label">FOR THE PARTNERS</span>
             <h3>Help shape what’s next.</h3>
-            <p>Connect your organisation with Europe’s engineering community. Showcase what you’re building, engage technical talent and help champion women in technology.</p>
+            <p>Put your technology in front of Europe’s engineers, developers and technical decision-makers. Showcase real products, build meaningful relationships, engage technical talent and help shape the future of engineering.</p>
             <a className="text-link" href="/sponsor">Explore sponsorship <span>↗</span></a>
           </article>
           <article className="lilac-card">

@@ -18,12 +18,14 @@ function interestDetails(submission: Submission): [string, string | undefined][]
       return [
         ['Partnership interest', topic],
         ['Sponsorship objectives', details?.sponsorship_objectives?.join(', ')],
+        ['Partnership timing', details?.partnership_timing],
       ];
     case 'speak':
       return [
         ['Talk topic', topic],
         ['Contribution type', details?.contribution_type],
         ['Programme area', details?.talk_area === 'other' ? 'Other' : programme.find(area => area.id === details?.talk_area)?.title],
+        ['Session level', details?.session_level],
       ];
   }
 }

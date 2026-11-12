@@ -43,24 +43,31 @@ test("speaker can omit the topic but must describe the idea", () => {
     ...valid,
     type: "speak",
     message: "A practical workshop",
-    contribution_type: "BUILD Lab / workshop",
+    contribution_type: "Hands-on BUILD Lab",
+    session_level: "Mixed",
   });
   assert.equal(value.topic, "");
-  assert.deepEqual(value.details, { contribution_type: "BUILD Lab / workshop" });
+  assert.deepEqual(value.details, { contribution_type: "Hands-on BUILD Lab", session_level: "Mixed" });
   assert.deepEqual(validateSubmission(value).value.details, value.details);
   assert.ok(validateSubmission({ ...value, contribution_type: "Unknown" }).error);
+  assert.ok(validateSubmission({ ...value, session_level: "Unknown" }).error);
 });
 
 test("sponsorship objectives support multiple selections and older enquiries", () => {
   const sponsor = { ...valid, type: "sponsor", company: "Example", topic: "Community partnership" };
   const { value } = validateSubmission({
     ...sponsor,
-    sponsorship_objectives: ["Inclusion", "Developer engagement", "Inclusion"],
+    sponsorship_objectives: ["Inclusion", "Technical Education / Skills Development", "Inclusion"],
+    partnership_timing: "Planning 2027 budgets",
   });
-  assert.deepEqual(value.details, { sponsorship_objectives: ["Inclusion", "Developer engagement"] });
+  assert.deepEqual(value.details, {
+    sponsorship_objectives: ["Inclusion", "Technical Education / Skills Development"],
+    partnership_timing: "Planning 2027 budgets",
+  });
   assert.deepEqual(validateSubmission(value).value.details, value.details);
   assert.equal(validateSubmission(sponsor).value.details, undefined);
   assert.ok(validateSubmission({ ...sponsor, sponsorship_objectives: ["Unknown"] }).error);
+  assert.ok(validateSubmission({ ...sponsor, partnership_timing: "Unknown" }).error);
 });
 
 test('attendee country and multiple interests survive validation and migration', () => {
@@ -74,6 +81,8 @@ test('attendee country and multiple interests survive validation and migration',
 test('speaker programme areas are restricted to known options, including Other', () => {
   const speaker = { ...valid, type: 'speak', topic: 'Learning systems', message: 'A technical talk' };
   assert.deepEqual(validateSubmission({ ...speaker, talk_area: 'other' }).value.details, { talk_area: 'other' });
+  const legacy = { ...speaker, details: { talk_area: 'other', contribution_type: 'BUILD Lab / workshop' } };
+  assert.deepEqual(validateSubmission(legacy).value.details, legacy.details);
   assert.ok(validateSubmission({ ...speaker, talk_area: 'unknown' }).error);
   assert.equal(validateSubmission(speaker).value.details, undefined);
 });

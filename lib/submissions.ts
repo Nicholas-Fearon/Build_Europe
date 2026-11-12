@@ -11,6 +11,8 @@ export type Submission={id:string;created_at:string;type:'attend'|'sponsor'|'spe
   talk_area?:string;
   contribution_type?:string;
   sponsorship_objectives?:string[];
+  partnership_timing?:string;
+  session_level?:string;
 }};
 export type AdminQuery={type:string;q:string;page:number;pageSize:number};
 export type SubmissionPage={records:Submission[];counts:{all:number;attend:number;sponsor:number;speak:number};total:number;page:number;pages:number};
