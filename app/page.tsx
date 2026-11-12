@@ -27,9 +27,9 @@ export default function Home() {
         <div><p className="eyebrow">01 / THE IDEA</p><h2>Different journeys.<br/>A shared ambition.</h2></div>
         <div className="about-copy">
           <p className="large-copy">Technology moves forward when more of us have a hand in building it.</p>
-          <p>BUILD Europe brings together engineers, developers and technical minds from across Europe to share what they’re building, tackle real challenges and learn from one another.</p>
-          <p>From software engineering and AI to cloud, data and cybersecurity, we’re creating a space where technical expertise, fresh perspectives and new ideas come together.</p>
-          <p>We’re here to champion women in technology, welcome different perspectives and build a more inclusive industry.</p>
+          <p>The most exciting breakthroughs happen when different disciplines, experiences and perspectives come together.</p>
+          <p>BUILD Europe creates space for those exchanges; bringing fresh thinking, practical expertise and new possibilities into the same room.</p>
+          <p>Because the future of technology shouldn’t just be something we talk about. It should be something more of us have the opportunity to build.</p>
           <a href="/about" className="text-link">More about BUILD Europe <span>↗</span></a>
         </div>
       </section>
@@ -51,15 +51,20 @@ export default function Home() {
           <h3>{title}</h3><p>{description}</p>
         </article>)}</div>
       </section>
-      <section className="section-pad home-experience" aria-labelledby="labs-title">
-        <h2 id="labs-title">BUILD Labs. Less watching. More doing.</h2>
-        <p className="home-section-intro">Bring your laptop and get involved.</p>
-        <p className="home-section-intro mt-3">Work through practical engineering challenges alongside experienced practitioners, experiment with new tools and develop skills you can apply immediately.</p>
-        <p className="home-section-intro mt-3">From AI applications and software development to cloud infrastructure, data and security, BUILD Labs are designed for people who want to learn by doing.</p>
-        <p className="eyebrow mt-6">Proposed workshop levels</p>
-        <ul className="mt-3 flex flex-wrap gap-2">
-          {workshopLevels.map(level => <li key={level} className="rounded border border-[var(--line)] px-3 py-2 text-sm">{level}</li>)}
-        </ul>
+      <section className="section-pad home-labs" aria-labelledby="labs-title">
+        <div className="home-labs-copy">
+          <p className="eyebrow">HANDS-ON WORKSHOPS</p>
+          <h2 id="labs-title">BUILD Labs. Less watching. More doing.</h2>
+          <p className="home-labs-lead">Bring your laptop and get involved.</p>
+          <p>Work through practical engineering challenges alongside experienced practitioners, experiment with new tools and develop skills you can apply immediately.</p>
+          <p>From AI applications and software development to cloud infrastructure, data and security, BUILD Labs are designed for people who want to learn by doing.</p>
+        </div>
+        <div className="home-labs-levels">
+          <h3 className="eyebrow" id="labs-levels-title">Planned workshop levels</h3>
+          <ul aria-labelledby="labs-levels-title">
+            {workshopLevels.map(level => <li key={level}>{level}</li>)}
+          </ul>
+        </div>
       </section>
       <section id="involved" className="involved section-pad">
         <div className="section-heading"><div><p className="eyebrow">04 / MAKE IT YOURS</p><h2>There’s more than<br/>one way to build.</h2></div><p>Show up. Share a perspective.<br/>Help make it possible.</p></div>
