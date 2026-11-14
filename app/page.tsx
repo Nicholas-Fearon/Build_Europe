@@ -1,4 +1,5 @@
 import { programme, workshopLevels } from '@/lib/programme.mjs';
+import ProgrammePillars from '@/components/ProgrammePillars';
 
 const experiences = [
   ["Hear how it’s built", 'Real engineers sharing the systems, decisions and lessons behind their work.'],
@@ -18,11 +19,14 @@ export default function Home() {
           <p className="hero-note">Be the first to hear about tickets, speakers, BUILD Labs and launch announcements.</p>
         </div>
       <div className="hero-art brand-art" role="img" aria-label="Sculptural Build Europe symbol in blue, violet, pink and orange"><div className="brand-glow"/><span className="brand-art-label">PEOPLE BUILDING<br/>A BRIGHTER TOMORROW</span><svg className="hero-symbol" viewBox="0 0 500 540" aria-hidden="true"><defs><linearGradient id="hero-gradient" x1=".1" y1="0" x2=".8" y2="1"><stop stopColor="#335bff"/><stop offset=".32" stopColor="#8243ef"/><stop offset=".64" stopColor="#ed4bb8"/><stop offset="1" stopColor="#ff9a65"/></linearGradient><linearGradient id="hero-top" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f4f2ed"/><stop offset="1" stopColor="#c5c3d3"/></linearGradient></defs><path d="M72 70h204c108 0 163 46 163 111 0 50-32 88-81 104L247 178H72z" fill="url(#hero-top)"/><path d="M72 253h167l195 130c0 68-60 108-159 108H72z" fill="url(#hero-gradient)"/><path d="M72 253h167l-167 238z" fill="#ffffff" opacity=".07"/></svg><span className="brand-art-footer">IDEAS. COMMUNITY. POSSIBILITY.</span><span className="brand-art-arrow">↗</span></div></section>
-      <section className="event-strip" aria-label="Event information">
-        <div><strong>AMSTERDAM</strong><span>Netherlands</span></div>
-        <div><strong>2027</strong><span>October</span></div>
-        <div><strong>2 DAYS</strong><span>Technical learning &amp; community</span></div>
-      </section>
+      <nav className="pillar-banner" aria-labelledby="pillar-banner-title">
+        <h2 id="pillar-banner-title" className="eyebrow">Content pillars</h2>
+        <ul>
+          {programme.map(({ id, title }) => (
+            <li key={id}><a href={`#pillar-${id}`}>{title}</a></li>
+          ))}
+        </ul>
+      </nav>
       <section id="about" className="about section-pad">
         <div><p className="eyebrow">01 / THE IDEA</p><h2>Different journeys.<br/>A shared ambition.</h2></div>
         <div className="about-copy">
@@ -32,6 +36,11 @@ export default function Home() {
           <p>Because the future of technology shouldn’t just be something we talk about. It should be something more of us have the opportunity to build.</p>
           <a href="/about" className="text-link">More about BUILD Europe <span>↗</span></a>
         </div>
+      </section>
+      <section className="event-strip" aria-label="Event information">
+        <div><strong>AMSTERDAM</strong><span>Netherlands</span></div>
+        <div><strong>2027</strong><span>October</span></div>
+        <div><strong>2 DAYS</strong><span>Technical learning &amp; community</span></div>
       </section>
       <section className="section-pad home-experience" aria-labelledby="experience-title">
         <p className="eyebrow">02 / THE EXPERIENCE</p>
@@ -47,9 +56,7 @@ export default function Home() {
         <p className="eyebrow">03 / THE PROGRAMME</p>
         <h2 id="programme-title">What we’ll explore</h2>
         <p className="home-section-intro">From building AI applications to securing complex systems, BUILD Europe will explore the technologies, challenges and ideas shaping modern engineering.</p>
-        <div className="home-programme-grid">{programme.map(({id, title, description}) => <article key={id}>
-          <h3>{title}</h3><p>{description}</p>
-        </article>)}</div>
+        <ProgrammePillars/>
       </section>
       <section className="section-pad home-labs" aria-labelledby="labs-title">
         <div className="home-labs-copy">
