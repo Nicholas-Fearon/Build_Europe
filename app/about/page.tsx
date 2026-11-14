@@ -13,7 +13,7 @@ export default function AboutPage() { return <>
       </section>
       <section className="experience section-pad"><div className="section-heading"><p className="eyebrow">ROOM FOR IDEAS. ROOM FOR YOU.</p><span>What we’re building towards ↘</span></div><div className="experience-grid">{[{n:'01',symbol:'↗',title:'Ideas worth exploring.',copy:'Progress starts with curiosity. The best ideas emerge when people question assumptions, exchange knowledge and explore new approaches to solving problems.'},{n:'02',symbol:'✳',title:'Connections that last.',copy:'Great technology is rarely built in isolation. BUILD Europe creates opportunities for relationships that cross disciplines, organisations and backgrounds, continuing long after the event ends.'},{n:'03',symbol:'⌘',title:'Get hands-on.',copy:'Learning becomes more valuable when it’s applied. Experiment with new tools, challenge your thinking and develop confidence through practical experience.'}].map(item => <article key={item.n}><div className="experience-top"><span>{item.n}</span><span className="experience-symbol">{item.symbol}</span></div><h3>{item.title}</h3><p>{item.copy}</p></article>)}</div></section>
       <section className="section-pad founder-section" aria-labelledby="founder-title">
-        <h2 id="founder-title" className="mb-5">A new event. Built on years of experience.</h2>
+        <h2 id="founder-title">A new event. Built on years of experience.</h2>
         <div className="founder-copy grid gap-7">
           <p className="home-section-intro">BUILD Europe was founded by Michaela Fearon, creator of the Women in Technology World Series.</p>
           <p className="home-section-intro">Over more than a decade, Michaela has built international technology events, brought together thousands of professionals and worked with leading organisations across Europe and the US. She founded and grew the Women in Technology World Series into an international events portfolio before selling the business in 2023.</p>
@@ -21,7 +21,7 @@ export default function AboutPage() { return <>
         </div>
       </section>
       <section className="faq section-pad">
-        <p className="eyebrow">A FEW THINGS YOU MIGHT BE WONDERING</p><h2>Good questions.</h2>
+        <div className="faq-heading"><p className="eyebrow">A FEW THINGS YOU MIGHT BE WONDERING</p><h2>Good questions.</h2></div>
         <div>
           <details><summary>Who is BUILD Europe for?<span>+</span></summary><p>BUILD Europe is for engineers, developers, technical practitioners and leaders working across AI, software, data, cloud, cybersecurity and beyond. We’re passionate about championing women in technology, but everyone is welcome. Whether you’re early in your career or have years of experience, there’s something here for you.</p></details>
           <details><summary>Are the date and venue confirmed?<span>+</span></summary><p>We’re planning BUILD Europe for Amsterdam in October 2027. We’re currently finalising the exact dates and venue. Register your interest to be the first to hear when they’re announced, along with programme and ticket details.</p></details>

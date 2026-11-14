@@ -37,8 +37,8 @@ export default function Home() {
         <p className="eyebrow">02 / THE EXPERIENCE</p>
         <h2 id="experience-title">Come curious. Leave knowing more.</h2>
         <p className="home-section-intro">Two days of real engineering case studies, live demonstrations and hands-on learning.</p>
-        <p className="home-section-intro mt-3">Go behind the scenes of the technologies being built across Europe. Discover the architecture, decisions, challenges and lessons behind real products and systems, with practical ideas you can take back to work.</p>
-        <p className="home-section-intro mt-3">Whether you’re here to develop your skills, discover new technologies or meet people solving similar challenges, you’ll leave with something valuable.</p>
+        <p className="home-section-intro">Go behind the scenes of the technologies being built across Europe. Discover the architecture, decisions, challenges and lessons behind real products and systems, with practical ideas you can take back to work.</p>
+        <p className="home-section-intro">Whether you’re here to develop your skills, discover new technologies or meet people solving similar challenges, you’ll leave with something valuable.</p>
         <div className="home-experience-grid">{experiences.map(([title, description], index) => <article key={title}>
           <span className="home-card-number" aria-hidden="true">0{index + 1} /</span><h3>{title}</h3><p>{description}</p>
         </article>)}</div>

@@ -5,10 +5,10 @@ export const metadata: Metadata = { title: 'Page not found — BUILD Europe' };
 
 export default function NotFound() {
   return (
-    <section className="section-pad">
+    <section className="section-pad not-found-page">
       <p className="eyebrow">404</p>
       <h1 className="page-title">Page not found.</h1>
-      <p className="home-section-intro mb-6">
+      <p className="home-section-intro">
         This page may have moved. Head back to the homepage to find event information.
       </p>
       <Link href="/" className="button dark">
