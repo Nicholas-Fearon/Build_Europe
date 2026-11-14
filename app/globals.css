@@ -37,6 +37,21 @@ body{background:var(--ink);color:var(--paper)}.site-header{border-color:#232630;
 /* Leave room for the existing captions around the hero artwork. */
 .brand-art .hero-symbol{height:83%;top:7%}
 
+@media (max-width: 620px) {
+  .founder-section {
+    padding-block: 68px;
+  }
+
+  .founder-section h2 {
+    margin-bottom: 26px;
+    text-wrap: balance;
+  }
+
+  .founder-section .founder-copy {
+    gap: 32px;
+  }
+}
+
 .home-labs {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(250px, 350px);
