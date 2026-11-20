@@ -330,3 +330,229 @@ body{background:var(--ink);color:var(--paper)}.site-header{border-color:#232630;
     max-width: 540px;
   }
 }
+
+/* Speaker guide and the link beside the application fields. */
+.speaker-guide {
+  --guide-gap: 24px;
+}
+.speaker-guide-header {
+  max-width: 1000px;
+}
+.speaker-guide-header .page-title {
+  max-width: 21ch;
+}
+.speaker-guide .speaker-guide-lead {
+  color: #c7b8ff;
+  font-size: clamp(18px, 2vw, 23px);
+  margin-bottom: 24px;
+}
+.speaker-guide-intro {
+  columns: 2;
+  column-gap: 32px;
+  margin-bottom: 28px;
+}
+.speaker-guide p,
+.speaker-guide li {
+  color: #c9c7d1;
+  font-size: 15px;
+  line-height: 1.75;
+}
+.speaker-guide p + p {
+  margin-top: 16px;
+}
+.speaker-guide-header > .eyebrow {
+  color: #c7b8ff;
+  font-size: 11px;
+}
+.speaker-guide-intro p {
+  break-inside: avoid;
+}
+.speaker-guide-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-block: 28px;
+  margin-top: 32px;
+  border-block: 1px solid var(--line);
+}
+.speaker-guide-nav a {
+  padding: 10px 14px;
+  border: 1px solid #48415c;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.speaker-guide-nav a:hover {
+  background: #241d3c;
+}
+.speaker-guide-section {
+  padding-block: 48px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 24px;
+}
+.speaker-guide-section > h2 {
+  max-width: 26ch;
+  font-size: clamp(28px, 3vw, 42px);
+  margin-bottom: 24px;
+}
+.speaker-guide-section > p {
+  max-width: 78ch;
+}
+.speaker-guide-section > :is(ul, ol) {
+  max-width: 78ch;
+}
+.speaker-guide-section > .speaker-guide-questions {
+  max-width: none;
+}
+.speaker-guide ul,
+.speaker-guide ol {
+  padding-left: 22px;
+  margin-block: 16px 24px;
+}
+.speaker-guide li + li {
+  margin-top: 10px;
+}
+.speaker-guide ul {
+  list-style: disc;
+}
+.speaker-guide ol {
+  list-style: decimal;
+}
+.speaker-guide-formats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--guide-gap);
+  margin-top: 28px;
+}
+.speaker-guide-card {
+  min-width: 0;
+  padding: 24px;
+  background: #141822;
+  border: 1px solid #393343;
+  border-top: 3px solid #9071f4;
+  border-radius: 8px;
+}
+.speaker-guide-card h3 {
+  color: var(--paper);
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+.speaker-guide-card .speaker-guide-card-intro {
+  color: #c7b8ff;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.speaker-guide-card h4 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.speaker-guide-card li,
+.speaker-guide-card p {
+  font-size: 14px;
+}
+.speaker-guide-topics {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.speaker-guide-topics details {
+  padding: 20px 24px;
+  border: 1px solid #393343;
+  border-radius: 8px;
+  background: #141822;
+}
+.speaker-guide-topics summary {
+  color: #c7b8ff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  cursor: pointer;
+  line-height: 1.6;
+}
+.speaker-guide-topics details[open] summary {
+  margin-bottom: 20px;
+}
+.speaker-guide-values,
+.speaker-guide-questions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--guide-gap);
+  margin-top: 24px;
+}
+.speaker-guide-values article {
+  padding: 24px;
+  background: #141822;
+  border: 1px solid #393343;
+  border-radius: 8px;
+}
+.speaker-guide-values h3,
+.speaker-guide-questions h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.speaker-guide .speaker-guide-questions {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: proposal;
+}
+.speaker-guide .speaker-guide-questions > li {
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #393343;
+  border-radius: 8px;
+  counter-increment: proposal;
+}
+.speaker-guide-questions li::before {
+  content: counter(proposal, decimal-leading-zero);
+  display: block;
+  color: #c7b8ff;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.speaker-guide-section .button {
+  margin-top: 24px;
+}
+.speaker-guide-callout {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #e8e3f4;
+  border-left: 3px solid #7660db;
+  border-radius: 4px;
+}
+.speaker-guide-callout p {
+  color: #373145;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.speaker-guide-callout a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 1050px) {
+  .speaker-guide-formats {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 620px) {
+  .speaker-guide {
+    --guide-gap: 16px;
+  }
+  .speaker-guide-intro {
+    columns: 1;
+  }
+  .speaker-guide-section {
+    padding-block: 36px;
+  }
+  .speaker-guide-values,
+  .speaker-guide-questions {
+    grid-template-columns: 1fr;
+  }
+  .speaker-guide-card,
+  .speaker-guide-values article,
+  .speaker-guide-questions li,
+  .speaker-guide-topics details {
+    padding: 20px;
+  }
+}

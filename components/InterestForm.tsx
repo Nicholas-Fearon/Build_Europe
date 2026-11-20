@@ -31,11 +31,14 @@ export default function InterestForm({ type }: { type: Interest }) {
       form.reset(); setStatus('success'); setMessage(thankYou[type]);
     } catch (error) { setStatus('error'); setMessage(error instanceof Error ? error.message : 'Please try again.'); }
   }
-  return <div className="form-card">
+  return <div className="form-card" id={type === 'speak' ? 'speaker-application' : undefined}>
     <div className="form-tabs" aria-label="Choose how to get involved">{(Object.keys(labels) as Interest[]).map(item => <a key={item} href={`/${item}`} aria-current={type === item ? 'page' : undefined} className={type === item ? 'active' : ''}>{labels[item]} <span>↗</span></a>)}</div>
     {status === 'success' ? <div className="success" role="status"><span className="success-mark">✓</span><h3>You’re part of what’s next.</h3><p>{message}</p><button className="text-link" onClick={() => setStatus('idle')}>Send another enquiry ↗</button></div> : <form key={type} onSubmit={submit}>
       <h3>{type === 'attend' ? 'Be first to hear about BUILD Europe.' : type === 'sponsor' ? 'Let’s build a partnership.' : 'Share what you’re building.'}</h3>
       <p className="form-description">{type === 'attend' ? 'Get updates on tickets, speakers, BUILD Labs and launch announcements.' : type === 'sponsor' ? 'Tell us a little about your organisation and how you’d like to get involved.' : 'Real engineering stories, practical lessons and honest experiences. Tell us what you’d like to share.'}</p>
+      {type === 'speak' && <aside className="speaker-guide-callout" aria-label="Speaker guidance">
+        <p>Find session formats, topic ideas and tips for your proposal in our <a href="/speak/guide">speaker guide <span aria-hidden="true">↗</span></a>.</p>
+      </aside>}
       <div className="field-grid"><label>Full name <span>*</span><input name="name" autoComplete="name" placeholder="Alex Morgan" required maxLength={100}/></label><label>Email address <span>*</span><input name="email" type="email" autoComplete="email" placeholder="alex@example.com" required maxLength={254}/></label></div>
       <div className="field-grid">
         <label>{type === 'sponsor' ? 'Organisation *' : 'Company / organisation'}<input name="company" autoComplete="organization" placeholder="Where you build" required={type === 'sponsor'} maxLength={150}/></label>

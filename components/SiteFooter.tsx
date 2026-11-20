@@ -1,7 +1,7 @@
 import BrandLogo from './BrandLogo';
 const groups = [
   {title:'Explore',links:[['Home','/'],['About the event','/about'],['Contact','/contact']]},
-  {title:'Get involved',links:[['Register your interest','/attend'],['Become a sponsor','/sponsor'],['Apply to speak','/speak']]},
+  {title:'Get involved',links:[['Register your interest','/attend'],['Become a sponsor','/sponsor'],['Apply to speak','/speak'],['Speaker guide','/speak/guide']]},
   {title:'Information',links:[['Privacy Policy','/privacy'],['Terms of Use','/terms'],['Cookie Policy','/cookies'],['Accessibility','/accessibility'],['Code of Conduct','/code-of-conduct']]},
 ];
 export default function SiteFooter() {
