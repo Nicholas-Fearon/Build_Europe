@@ -15,7 +15,6 @@ export async function POST(request:Request){
     if(!input||typeof input.email!=='string'||typeof input.password!=='string'||input.password.length>256||input.email.length>254)return json({error:'Enter your email and password.'},400);
     stage = 'RATE_LIMIT';
     if(!await consumeLimit(request,'login',10,900))return json({error:'Too many attempts. Please try again in 15 minutes.'},429);
-    if(input.email.trim().toLowerCase()!==adminEmail())return json({error:'Incorrect email or password.'},401);
     stage = 'AUTHENTICATION';
     if(authMode()==='supabase'){
       const client=await authClient();
@@ -26,6 +25,7 @@ export async function POST(request:Request){
       }
       return json({success:true});
     }
+    if(input.email.trim().toLowerCase()!==adminEmail())return json({error:'Incorrect email or password.'},401);
     const host=(await headers()).get('host')||'';
     if(!/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host))return json({error:'Development sign-in is local only.'},403);
     const credentials=getLocalCredentials();

@@ -24,7 +24,7 @@ Open `/admin` and sign in with your authorised email and password. The default o
 Production authentication uses Supabase Auth, cookie-based server sessions, session refresh through Next.js Proxy, and server-verified users. Access requires all of:
 
 - A valid Supabase session verified with `getUser()`.
-- A confirmed email matching `ADMIN_EMAIL`.
+- A confirmed email address.
 - Server-managed `app_metadata.build_europe_admin = true`.
 
 User-editable metadata cannot grant admin access. There is no admin signup endpoint. Database reads and the paginated dashboard RPC use a server-only Supabase secret key after authorisation. Anonymous and ordinary authenticated clients have no direct table or RPC access. Private pages and admin responses use `no-store`.
@@ -35,7 +35,7 @@ See [docs/PRODUCTION.md](docs/PRODUCTION.md) for the migration and deployment se
 
 Useful commands:
 
-- `npm run admin:provision`: create or update the assigned admin in Supabase; password arrives over hidden stdin and is not written to disk.
+- `npm run admin:provision -- --email person@example.com`: create or update an authorised admin in Supabase; password arrives over hidden stdin and is not written to disk. Omitting `--email` uses `ADMIN_EMAIL`.
 - `npm run migrate:submissions`: upload existing local submissions without deleting them or duplicating record IDs.
 - `npm run check:production`: verify HTTPS configuration, the database RPC, and the provisioned admin using deployment settings.
 - `npm run build` then `npm start`: production server. The host controls the port; `next start` supports standard Node hosting.

@@ -18,13 +18,15 @@ test('origin check uses configured public origin behind a reverse proxy',()=>{
   assert.equal(trustedOrigin(new Request('http://internal/api'),env),false);
 });
 test('admin access requires confirmed email and server-managed metadata',()=>{
-  const env={ADMIN_EMAIL:'owner@example.com'};
   const user={id:'user-id',email:'owner@example.com',email_confirmed_at:'2026-11-03',app_metadata:{build_europe_admin:true}};
-  assert.equal(isAdminUser(user,env),true);
-  assert.equal(isAdminUser({...user,email:'stranger@example.com'},env),false);
-  assert.equal(isAdminUser({...user,email_confirmed_at:null},env),false);
-  assert.equal(isAdminUser({...user,app_metadata:{},user_metadata:{build_europe_admin:true}},env),false);
-  assert.equal(isAdminUser(null,env),false);
+  assert.equal(isAdminUser(user),true);
+  assert.equal(isAdminUser({...user,id:'second-admin',email:'second@example.com'}),true);
+  assert.equal(isAdminUser({...user,email_confirmed_at:null}),false);
+  assert.equal(isAdminUser({...user,email:null}),false);
+  assert.equal(isAdminUser({...user,app_metadata:{build_europe_admin:false}}),false);
+  assert.equal(isAdminUser({...user,app_metadata:{build_europe_admin:'true'}}),false);
+  assert.equal(isAdminUser({...user,app_metadata:{},user_metadata:{build_europe_admin:true}}),false);
+  assert.equal(isAdminUser(null),false);
 });
 test('Vercel production resolves its trusted canonical origin without APP_URL',()=>{
   const env={NODE_ENV:'production',VERCEL:'1',VERCEL_ENV:'production',VERCEL_PROJECT_PRODUCTION_URL:'build-europe.vercel.app',VERCEL_URL:'build-europe-random-team.vercel.app'};

@@ -21,7 +21,9 @@ The second file adds a server-only paginated dashboard RPC and a shared, atomic 
 npm run admin:provision
 ```
 
-After the hidden-input prompt, supply one line of JSON containing the `password` field. Use the chosen admin password. The script creates or updates only that email, sets server-managed admin metadata, confirms the email, and switches local preview settings to Supabase. It does not send an email or store the password. Existing auth users with other emails are left unchanged.
+After the hidden-input prompt, supply one line of JSON containing the `password` field. Use the chosen admin password. The script creates or updates only the selected email, sets server-managed admin metadata, confirms the email, and switches local preview settings to Supabase. It does not send an email or store the password. Existing auth users with other emails are left unchanged.
+
+To add another full-access admin, run `npm run admin:provision -- --email person@example.com`. Each confirmed user with server-managed `app_metadata.build_europe_admin = true` can sign in. Only a trusted server secret can grant that role. `ADMIN_EMAIL` remains the default provisioning account and notification recipient.
 
 Do not store the password in command-line arguments, shell history, a tracked file, or an environment variable. For a future password change use the same provisioning process or Supabase’s administrator controls. If sign-in recovery email is needed, configure Supabase SMTP and a recovery flow before relying on it; the app does not yet expose self-service recovery.
 

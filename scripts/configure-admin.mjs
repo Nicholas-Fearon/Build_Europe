@@ -5,6 +5,10 @@ import {hashPassword} from '../lib/admin-auth.mjs';
 import {adminEmail,supabasePublicConfig} from '../lib/runtime-config.mjs';
 try { process.loadEnvFile('.env.local'); } catch(error) { if(error.code!=='ENOENT')throw error; }
 const mode=process.argv.includes('--local')?'local':'supabase';
+const emailIndex=process.argv.indexOf('--email');
+const targetEmail=(emailIndex===-1?adminEmail():process.argv[emailIndex+1]||'').trim().toLowerCase();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(targetEmail))throw new Error('Provide a valid administrator email.');
+if(mode==='local'&&emailIndex!==-1)throw new Error('Use ADMIN_EMAIL to configure the local development account.');
 let client;
 if(mode==='supabase'){
   const {url}=supabasePublicConfig();
@@ -38,11 +42,11 @@ if(mode==='local'){
   let existing=null;
   for(let page=1;!existing;page++){
     const {data,error}=await client.auth.admin.listUsers({page,perPage:1000});if(error)throw new Error('Could not inspect auth users. Check the server key.');
-    existing=data.users.find(user=>user.email?.toLowerCase()===adminEmail());if(data.users.length<1000)break;
+    existing=data.users.find(user=>user.email?.toLowerCase()===targetEmail);if(data.users.length<1000)break;
   }
   const attributes={password,email_confirm:true,app_metadata:{...existing?.app_metadata,build_europe_admin:true}};
-  const response=existing?await client.auth.admin.updateUserById(existing.id,attributes):await client.auth.admin.createUser({email:adminEmail(),...attributes});
+  const response=existing?await client.auth.admin.updateUserById(existing.id,attributes):await client.auth.admin.createUser({email:targetEmail,...attributes});
   if(response.error)throw new Error('Could not provision the admin account. Check Supabase authentication settings.');
   await updateEnv({ADMIN_AUTH_MODE:'supabase',SUBMISSION_STORAGE:'supabase'});
-  console.log('Supabase administrator configured for '+adminEmail()+'. Password was not saved to disk. Restart the app to use Supabase.');
+  console.log('Supabase administrator configured for '+targetEmail+'. Password was not saved to disk. Restart the app to use Supabase.');
 }

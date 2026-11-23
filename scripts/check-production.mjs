@@ -9,5 +9,5 @@ const {error}=await client.rpc('admin_submissions_page',{p_type:'all',p_search:'
 if(error)throw new Error('Production schema or database access is not ready. Apply schema.sql and production.sql.');
 let admin;
 for(let page=1;!admin;page++){const {data,error}=await client.auth.admin.listUsers({page,perPage:1000});if(error)throw new Error('Cannot verify admin provisioning.');admin=data.users.find(user=>user.email?.toLowerCase()===adminEmail(env));if(data.users.length<1000)break;}
-if(!isAdminUser(admin,env))throw new Error('The verified administrator account has not been provisioned.');
+if(!isAdminUser(admin))throw new Error('The verified administrator account has not been provisioned.');
 console.log('Production configuration, database RPC, and administrator verified for '+origin+'.');
