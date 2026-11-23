@@ -1,5 +1,9 @@
-import type { Metadata } from 'next';
-export const metadata: Metadata = { title: 'About — BUILD Europe' };
+import { publicPageMetadata } from '@/lib/seo';
+export const metadata = publicPageMetadata(
+  "/about",
+  "About BUILD Europe | Engineering, Community & Inclusion",
+  "Meet the people and purpose behind BUILD Europe, a European engineering conference championing women in technology and welcoming different perspectives.",
+);
 export default function AboutPage() { return <>
       <section id="about" className="about section-pad">
         <div><p className="eyebrow">01 / THE IDEA</p><h1 className="page-title">Different journeys.<br/>A shared ambition.</h1></div>

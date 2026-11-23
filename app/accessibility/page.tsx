@@ -1,6 +1,10 @@
-import type { Metadata } from 'next';
+import { publicPageMetadata } from '@/lib/seo';
 import PolicyPage from '@/components/PolicyPage';
-export const metadata: Metadata = { title: 'Accessibility — Build Europe' };
+export const metadata = publicPageMetadata(
+  "/accessibility",
+  "Accessibility | BUILD Europe Website & Event",
+  "Read about BUILD Europe website accessibility, planned event access arrangements and how to raise access requirements as details are confirmed.",
+);
 export default function AccessibilityPage() { return <PolicyPage title="Accessibility" intro="We want Build Europe to be welcoming and easier to access, online and at the event." sections={[
 {id:'approach',title:'Our approach',content:<><p>We aim to make information easy to find, understand, and use. Accessibility is part of how we develop the website and plan the event. This statement describes our current approach; it is not a claim of independently audited compliance.</p></>},
 {id:'website',title:'Using the website',content:<><p>The site includes labelled form fields, visible keyboard focus, a skip-to-content link, and layouts that adapt to smaller screens. Navigation and forms are designed to work with a keyboard, and motion is reduced when your device requests it.</p><p>You can use your browser’s zoom controls to enlarge text. If something is difficult to read or use, we want to know about it.</p></>},

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { siteUrl } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
@@ -6,5 +7,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy', '/terms', '/cookies', '/accessibility', '/code-of-conduct',
   ];
 
-  return paths.map(path => ({ url: new URL(path, 'https://www.buildeurope.io').href }));
+  return paths.map(path => ({ url: new URL(path, siteUrl).href }));
 }

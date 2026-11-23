@@ -1,24 +1,11 @@
-import type { Metadata } from 'next';
+import { publicPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Call for Speakers & Speaker Guide — BUILD Europe 2027',
-  description: 'Share your engineering experience at BUILD Europe 2027. Explore conference talks, BUILD Labs, Deep Dives, topic ideas and tips for your speaker proposal.',
-  alternates: { canonical: 'https://www.buildeurope.io/speak/guide' },
-  openGraph: {
-    type: 'website',
-    title: 'Speaker Guide — BUILD Europe 2027',
-    description: 'Explore session formats, engineering topics and practical guidance for your BUILD Europe speaker proposal.',
-    url: 'https://www.buildeurope.io/speak/guide',
-    siteName: 'BUILD Europe',
-    locale: 'en_GB',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'Speaker Guide — BUILD Europe 2027',
-    description: 'Real engineering. Real challenges. Real takeaways. Share your session idea with BUILD Europe.',
-  },
-};
+export const metadata = publicPageMetadata(
+  "/speak/guide",
+  "Call for Speakers & Speaker Guide | BUILD Europe 2027",
+  "Explore conference talks, BUILD Labs, Deep Dives and topic ideas for BUILD Europe 2027. Find practical guidance and submit your speaker proposal.",
+);
 
 export default function SpeakerGuidePage() {
   return (

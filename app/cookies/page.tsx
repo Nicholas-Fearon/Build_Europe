@@ -1,6 +1,10 @@
-import type { Metadata } from 'next';
+import { publicPageMetadata } from '@/lib/seo';
 import PolicyPage from '@/components/PolicyPage';
-export const metadata: Metadata = { title: 'Cookie Policy — Build Europe' };
+export const metadata = publicPageMetadata(
+  "/cookies",
+  "Cookie Policy | BUILD Europe",
+  "Learn about cookies and browser storage on the BUILD Europe website, including the organiser sign-in and your browser settings.",
+);
 export default function CookiesPage() { return <PolicyPage title="Cookie Policy" intro="Clear information about cookies, tracking, and the choices available to you." sections={[
 {id:'what',title:'What are cookies?',content:<><p>Cookies are small pieces of information stored by your browser. Websites can use them for functions such as remembering settings or understanding how visitors use a site. Similar technologies include browser storage and tracking pixels.</p></>},
 {id:'current',title:'What this website currently uses',content:<><p>The Build Europe application currently has no analytics, advertising, tracking pixels, third-party embeds, or social media tracking integrations. Public enquiry forms do not use cookies or browser storage to retain form details. The organiser’s admin area uses first-party authentication cookies to keep the organiser signed in. In production these are managed by Supabase and may refresh during an active session; signing out clears the browser’s authentication cookies. They are not used for analytics or advertising. Submitted details are saved by the server, as described in our <a href="/privacy">Privacy Policy</a>.</p><p>The development environment may use technical tooling that is separate from the public event website. The final hosted website will be checked again before launch.</p></>},

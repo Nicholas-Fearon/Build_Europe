@@ -332,6 +332,35 @@ body{background:var(--ink);color:var(--paper)}.site-header{border-color:#232630;
 }
 
 /* Speaker guide and the link beside the application fields. */
+.enquiry-information > h2 {
+  max-width: 24ch;
+  font-size: clamp(30px, 3.5vw, 48px);
+}
+
+.enquiry-information .home-experience-grid h3 {
+  margin-top: 0;
+}
+
+.enquiry-information .text-link {
+  margin-top: 20px;
+}
+
+.contact-organiser {
+  margin-block: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.contact-organiser p {
+  color: #c9c7d1;
+  font-size: 14px;
+}
+
+.contact-organiser p + p {
+  margin-top: 8px;
+}
+
 .speaker-guide {
   --guide-gap: 24px;
 }

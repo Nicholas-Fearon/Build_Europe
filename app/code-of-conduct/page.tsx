@@ -1,6 +1,10 @@
-import type { Metadata } from 'next';
+import { publicPageMetadata } from '@/lib/seo';
 import PolicyPage from '@/components/PolicyPage';
-export const metadata: Metadata = { title: 'Code of Conduct — Build Europe' };
+export const metadata = publicPageMetadata(
+  "/code-of-conduct",
+  "Code of Conduct | BUILD Europe Community",
+  "Read the BUILD Europe community standards for respectful participation, inclusive conversations and behaviour at the event and online.",
+);
 export default function ConductPage() { return <PolicyPage title="Code of Conduct" intro="A community built on respect, curiosity, and room for different perspectives." sections={[
 {id:'community',title:'Who this applies to',content:<><p>These community standards are intended for attendees, speakers, sponsors, volunteers, organisers, and anyone taking part in Build Europe spaces, including event-related online conversations.</p></>},
 {id:'respect',title:'Build with respect',content:<><ul><li>Be considerate of different backgrounds, experiences, and perspectives.</li><li>Make space for others to speak and participate.</li><li>Respect personal boundaries, names, and pronouns.</li><li>Ask before photographing or recording someone, and respect their answer.</li><li>Disagree with ideas constructively, without personal attacks.</li></ul></>},

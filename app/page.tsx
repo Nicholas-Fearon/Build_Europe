@@ -1,5 +1,12 @@
+import { publicPageMetadata, siteDescription } from '@/lib/seo';
 import { programme, workshopLevels } from '@/lib/programme.mjs';
 import ProgrammePillars from '@/components/ProgrammePillars';
+
+export const metadata = publicPageMetadata(
+  '/',
+  'BUILD Europe 2027 | Engineering Conference in Amsterdam',
+  siteDescription,
+);
 
 const experiences = [
   ["Hear how it’s built", 'Real engineers sharing the systems, decisions and lessons behind their work.'],
